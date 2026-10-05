@@ -1,0 +1,7 @@
+node_modules/
+*.log
+.DS_Store
+.env
+.env.*
+# Evidência local do e2e (scripts/e2e/run-e2e.mjs --keep) fica fora do git.
+.e2e-evidence/

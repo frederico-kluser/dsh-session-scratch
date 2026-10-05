@@ -1,0 +1,58 @@
+{
+  "name": "dsh-session-scratch",
+  "version": "0.1.2",
+  "private": true,
+  "description": "DeepSeek Harness (DSH) plugin: private per-session TMPDIR for agent shell commands (via BASH_ENV), a /tmp-literal guard (deny or warn) and owner-marker based cleanup of the session scratch dirs.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "hooks",
+    "scripts/install-home-patch.mjs",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=4.0.0 <5"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "test:e2e": "node scripts/e2e/run-e2e.mjs",
+    "typecheck": "node \"${DSH_REPO:-/home/ondokai/Projects/deepseek-harness}/node_modules/typescript/bin/tsc\" -p tsconfig.json --typeRoots \"${DSH_REPO:-/home/ondokai/Projects/deepseek-harness}/node_modules/@types\"",
+    "install:home": "node scripts/install-home-patch.mjs",
+    "check:home": "node scripts/install-home-patch.mjs --check"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frederico-kluser/dsh-session-scratch.git"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "dsh",
+    "cordis",
+    "deepseek-harness",
+    "tmpdir",
+    "scratch",
+    "agents"
+  ]
+}

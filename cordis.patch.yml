@@ -1,0 +1,31 @@
+# dsh-session-scratch — camada de bundle. Aplicada sozinha a qualquer
+# composição que instale este pacote como bundle
+# (`dsh plugin --profile <p> add link:/home/ondokai/Projects/dsh-session-scratch`).
+#
+# Rota recomendada nesta máquina: NÃO a de bundle, e sim o patch de HOME
+# (~/.dsh/cordis.patch.yml, vale para todos os profiles) gerado por
+# `node scripts/install-home-patch.mjs`. Use UMA rota só: as duas declaram a
+# MESMA id, e o Loader colapsa linhas de id repetido em silêncio (vence a
+# camada mais alta).
+#
+# - `name` relativo é ancorado neste arquivo (vira file:// URL);
+# - a linha é whole-entry replace: para mudar a config em outra camada,
+#   reafirme a entrada INTEIRA (todas as chaves abaixo);
+# - o plugin valida a config em apply() e falha alto (fibra FAILED, aviso no
+#   log, boot segue sem o plugin) em valor inválido.
+- insert:
+    - id: session-scratch
+      name: './src/index.js'
+      config:
+        baseDir: agent-scratch/dsh
+        exportTmpdir: true
+        promptRule: true
+        guard: deny
+        guardTools: [bash]
+        fileTools: [write, edit]
+        escapeMarker: allow-literal-tmp
+        allowPrefixes: [/tmp/.X11-unix, /tmp/.ICE-unix]
+        shareWithSubagents: true
+        idleDays: 3
+        orphanGraceMinutes: 30
+        sweepIntervalMinutes: 30
